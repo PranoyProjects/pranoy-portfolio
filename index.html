@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>N Sai Pranoy Kumar | Data Engineer | Salesforce Migration Specialist</title>
+<meta name="description" content="N Sai Pranoy Kumar: Data Engineer and Salesforce Migration Specialist. PySpark, Azure Databricks, Delta Lake, SQL and 2M+ record Salesforce migrations.">
+<meta name="theme-color" content="#06080d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='7' fill='%239fdcb8'/%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%239fdcb8' stroke-opacity='.5'/%3E%3C/svg%3E">
+<!-- Fonts: delete these 3 lines for zero external requests (system fallbacks apply) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================= Tokens ================= */
+:root{
+  --void:#06080d; --deep:#0c1019; --line:#1e2433;
+  --ink:#ebe7de; --mute:#a5a39b;
+  --aurora:#9fdcb8; --amber:#d9a76a; --blue:#7fb8e0;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --px:0; --py:0; --depth:30px; --wrap:1180px;
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--void);color:var(--ink);font:400 17px/1.65 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--aurora);outline-offset:4px;border-radius:6px}
+.skip{position:absolute;left:1rem;top:-4rem;background:var(--aurora);color:var(--void);padding:.6rem 1rem;border-radius:8px;z-index:50;text-decoration:none}
+.skip:focus{top:1rem}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem);position:relative}
+
+/* ================= Sky ================= */
+.sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.nebula{position:absolute;border-radius:50%;filter:blur(80px);opacity:.22}
+.nebula.n1{width:60vw;height:60vw;left:-20vw;top:-10vw;background:radial-gradient(circle,#1d4a4a,transparent 70%)}
+.nebula.n2{width:50vw;height:50vw;right:-15vw;bottom:-15vw;background:radial-gradient(circle,#4a3320,transparent 70%)}
+.layer{position:absolute;inset:-60px;will-change:transform;
+  transform:translate3d(calc(var(--px) * var(--depth) * var(--k) * -1),calc(var(--py) * var(--depth) * var(--k) * -1),0)}
+.layer[data-k="1"]{--k:.3}.layer[data-k="2"]{--k:.7}.layer[data-k="3"]{--k:1.4}
+.drift{position:absolute;inset:0;animation:drift var(--dur,180s) linear infinite}
+.stars{position:absolute;left:0;top:0;width:1px;height:1px;border-radius:50%}
+.layer[data-k="2"] .stars{width:2px;height:2px}
+.layer[data-k="3"] .stars{width:2.5px;height:2.5px}
+.tw{animation:twinkle var(--tw,5s) ease-in-out infinite}
+@keyframes drift{to{transform:translateY(-2000px)}}
+@keyframes twinkle{50%{opacity:.35}}
+/* shooting stars */
+.shoot{position:absolute;width:140px;height:1px;background:linear-gradient(90deg,transparent,#fff);opacity:0;transform:rotate(-24deg);animation:shoot 11s linear infinite}
+.shoot.s1{top:12%;left:70%;animation-delay:2s}
+.shoot.s2{top:38%;left:85%;animation-delay:6.5s}
+.shoot.s3{top:65%;left:55%;animation-delay:9.5s}
+@keyframes shoot{0%{opacity:0;translate:0 0}2%{opacity:1}8%{opacity:0;translate:-520px 230px}100%{opacity:0;translate:-520px 230px}}
+
+/* ================= Nav ================= */
+header.top{position:relative;z-index:2}
+.nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem;padding:1.6rem 0}
+.brand{font:500 1.2rem/1 var(--serif);text-decoration:none}
+.brand i{color:var(--aurora)}
+.nav ul{display:flex;flex-wrap:wrap;gap:.25rem 1.5rem;list-style:none;margin:0;padding:0;font-size:.95rem}
+.nav ul a{text-decoration:none;color:var(--mute);transition:color .2s}
+.nav ul a:hover{color:var(--ink)}
+
+/* ================= Shared ================= */
+main{position:relative;z-index:1}
+section{padding:clamp(4.5rem,10vw,7.5rem) 0}
+.label{font-size:.95rem;color:var(--aurora);margin:0 0 1rem}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.015em}
+h2{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.05;max-width:20ch}
+.lede{color:var(--mute);max-width:60ch;margin:1.2rem 0 0}
+.pill{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--line);border-radius:999px;padding:.5rem 1rem;font-size:.92rem;background:rgba(12,16,25,.6)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:0 1.5rem;border-radius:999px;text-decoration:none;font:500 1rem var(--sans);border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:transform .25s,background .25s,color .25s,border-color .25s}
+.btn:hover{transform:translateY(-3px);border-color:var(--aurora)}
+.btn.solid{background:var(--ink);color:var(--void);border-color:var(--ink)}
+.btn.solid:hover{background:var(--aurora);border-color:var(--aurora)}
+.btn svg{width:18px;height:18px}
+.panel{border:1px solid var(--line);border-radius:22px;padding:clamp(1.5rem,3vw,2.25rem);background:rgba(12,16,25,.72);backdrop-filter:blur(4px)}
+
+/* ================= Hero ================= */
+.hero{min-height:min(900px,100svh);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:center;gap:2rem;padding:1.5rem 0 4rem}
+.hero .name{font-size:1.05rem;color:var(--mute);margin:0 0 1.2rem}
+.hero h1{font-size:clamp(2.9rem,6.8vw,5.8rem);line-height:1;font-weight:300}
+.hero h1 span{display:block}
+.hero h1 .amp{font-style:italic;color:var(--aurora);font-size:.6em;margin:.15em 0}
+.hero .sub{font-size:1.12rem;color:var(--mute);max-width:46ch;margin:1.6rem 0 2rem}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--aurora);box-shadow:0 0 10px var(--aurora);animation:pulse 2.6s ease-in-out infinite;flex:none}
+@keyframes pulse{50%{opacity:.45}}
+.cue{display:inline-flex;align-items:center;gap:.8rem;margin-top:2.6rem;color:var(--mute);font-size:.9rem;text-decoration:none}
+.cue::after{content:"";width:1px;height:40px;background:linear-gradient(var(--aurora),transparent);animation:cue 2.4s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* Orb centerpiece: planet, orbit rings carrying data "moons", echo pulses */
+.orbit{position:relative;width:min(100%,480px);aspect-ratio:1;justify-self:center;
+  transform:translate3d(calc(var(--px) * var(--depth) * 1.1),calc(var(--py) * var(--depth) * 1.1),0)}
+.ring{position:absolute;border-radius:50%;border:1px solid var(--line)}
+.ring.r1{inset:0;border-style:dashed;animation:spin 70s linear infinite}
+.ring.r2{inset:14%;animation:spin 44s linear infinite reverse}
+.ring.r3{inset:27%;border-color:rgba(159,220,184,.18);animation:spin 30s linear infinite}
+.moon{position:absolute;display:grid;place-items:center;border-radius:999px;font:600 11px/1 var(--sans);color:var(--void);padding:4px 8px;white-space:nowrap}
+.r1 .moon{top:-11px;left:50%;background:var(--amber);box-shadow:0 0 16px var(--amber)}
+.r1 .moon.b{top:auto;bottom:-11px;left:30%;background:var(--blue);box-shadow:0 0 16px var(--blue)}
+.r2 .moon{bottom:6%;left:4%;background:var(--aurora);box-shadow:0 0 14px var(--aurora)}
+.r3 .moon{top:46%;right:-8px;width:7px;height:7px;padding:0;background:var(--ink)}
+.moon span{display:inline-block;animation:spin 70s linear infinite reverse} /* keeps labels upright */
+.r2 .moon span{animation:spin 44s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bob{position:absolute;inset:34%;animation:bob 9s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px)}}
+.planet{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 30% 28%,#3a5a66 0%,#16232f 45%,#080b12 78%);
+  box-shadow:inset -18px -10px 40px rgba(0,0,0,.65),inset 6px 4px 18px rgba(217,167,106,.35),0 0 90px -20px rgba(159,220,184,.4)}
+.planet::before{content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:screen;
+  background:repeating-linear-gradient(8deg,transparent 0 9px,rgba(159,220,184,.25) 9px 11px,transparent 11px 22px,rgba(217,167,106,.18) 22px 23px);
+  background-size:200% 100%;animation:surface 60s linear infinite}
+.planet::after{content:"";position:absolute;inset:-30% -60%;border-radius:50%;border:2px solid rgba(217,167,106,.35);transform:rotate(-18deg) scaleY(.22)}
+@keyframes surface{to{background-position:-200% 0}}
+.echo{position:absolute;inset:34%;border-radius:50%;border:1px solid var(--aurora);opacity:0;animation:echo 7s ease-out infinite}
+.echo:nth-of-type(2){animation-delay:2.3s}.echo:nth-of-type(3){animation-delay:4.6s}
+@keyframes echo{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.9);opacity:0}}
+
+/* ================= Impact stats ================= */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;padding-top:0}
+.stat{border-top:1px solid var(--line);padding-top:1.2rem}
+.stat b{display:block;font:300 clamp(2.4rem,5vw,3.6rem)/1 var(--serif);color:var(--ink);font-variant-numeric:tabular-nums}
+.stat span{color:var(--mute);font-size:.95rem}
+
+/* ================= About ================= */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:start}
+.about p{margin:0 0 1.2rem;max-width:60ch;color:var(--mute)}
+.about p:first-of-type{color:var(--ink)}
+blockquote{margin:1.6rem 0 0;font:300 italic clamp(1.6rem,3vw,2.3rem)/1.2 var(--serif);border-top:1px solid var(--line);padding-top:1.5rem}
+
+/* ================= Pipeline graphic ================= */
+.pipe{margin-top:3rem;padding:clamp(1rem,3vw,2rem)}
+.pipe-scroll{overflow-x:auto}
+.pipe svg{display:block;width:100%;min-width:760px;height:auto}
+.pipe .node rect{fill:#0e1420;stroke:var(--line);transition:stroke .3s,fill .3s}
+.pipe .node:hover rect{stroke:var(--aurora);fill:#11202a}
+.pipe text{fill:var(--ink);font:500 15px var(--sans)}
+.pipe text.sm{fill:var(--mute);font:400 12.5px var(--sans)}
+.pipe path.track{fill:none;stroke:#26304a;stroke-width:1.5;stroke-dasharray:4 6}
+.pipe .tier{font:italic 400 22px var(--serif)}
+
+/* ================= Stack ================= */
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:3rem}
+.stack h3{font-size:1.45rem;margin-bottom:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;margin:0;padding:0}
+.chips li{border:1px solid var(--line);border-radius:999px;padding:.45rem .9rem;font-size:.92rem;transition:transform .25s,border-color .25s,color .25s}
+.chips li:hover{transform:translateY(-4px);border-color:var(--aurora);color:var(--aurora)}
+
+/* ================= Experience (expandable) ================= */
+.timeline{list-style:none;margin:3rem 0 0;padding:0;border-top:1px solid var(--line)}
+.timeline > li{border-bottom:1px solid var(--line)}
+.timeline details{border-radius:12px;transition:background .3s}
+.timeline summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:200px minmax(0,1fr) 44px;gap:.5rem 2rem;align-items:start;padding:1.8rem .75rem;transition:transform .3s}
+.timeline summary::-webkit-details-marker{display:none}
+.timeline summary:hover{transform:translateX(12px)}
+.timeline details:hover,.timeline details[open]{background:rgba(159,220,184,.04)}
+.timeline time{color:var(--mute);font-variant-numeric:tabular-nums}
+.timeline h3{font-size:1.5rem}
+.timeline .org{color:var(--aurora);font-size:.95rem;margin:.2rem 0 .4rem}
+.timeline .brief{margin:0;color:var(--mute)}
+.plus{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;transition:transform .3s,border-color .3s}
+.plus::before{content:"+";font-size:1.3rem;line-height:1;color:var(--ink)}
+details[open] .plus{transform:rotate(45deg);border-color:var(--aurora)}
+.more{padding:0 .75rem 1.8rem calc(200px + 2rem + .75rem)}
+.more ul{margin:0;padding-left:1.1rem;color:var(--ink);max-width:70ch}
+.more li{margin:.35rem 0}
+.more li::marker{color:var(--aurora)}
+.more .tags{margin-top:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0}
+.more .tags li,.card .tags li{margin:0;font-size:.8rem;color:var(--aurora);border:1px solid rgba(159,220,184,.25);border-radius:999px;padding:.2rem .65rem}
+
+/* ================= Project ================= */
+.project{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2rem;align-items:center;margin-top:3rem;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .4s,box-shadow .4s}
+.project:hover{transform:translateY(-8px);border-color:rgba(159,220,184,.6);box-shadow:0 24px 60px -28px rgba(159,220,184,.5)}
+.project h3{font-size:2rem}
+.project p{color:var(--mute);margin:.8rem 0 1.2rem}
+.sheet{border:1px solid var(--line);border-radius:14px;background:#0a0e16;overflow:hidden;font-size:13px}
+.sheet .bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sheet .bar i{width:9px;height:9px;border-radius:50%;background:#2a3246}
+.sheet table{width:100%;border-collapse:collapse}
+.sheet td,.sheet th{padding:8px 12px;border-bottom:1px solid #151b28;text-align:left;font-weight:400}
+.sheet th{color:var(--mute)}
+.sheet .bad{color:#e8a08a;text-decoration:line-through;text-decoration-color:rgba(232,160,138,.6)}
+.sheet .ok{color:var(--aurora)}
+.scan{animation:scan 4s ease-in-out infinite}
+@keyframes scan{0%,100%{background:transparent}50%{background:rgba(159,220,184,.06)}}
+
+/* ================= Certifications ================= */
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:3rem}
+.cert{display:flex;flex-direction:column;gap:.6rem;border:1px solid var(--line);border-radius:18px;padding:1.4rem;background:rgba(12,16,25,.72);text-decoration:none;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
+.cert:hover{transform:translateY(-8px);border-color:rgba(159,220,184,.6);box-shadow:0 20px 50px -26px rgba(159,220,184,.5)}
+.badge{width:46px;height:46px}
+.cert .issuer{font-size:.85rem;color:var(--mute)}
+.cert h3{font-size:1.25rem;line-height:1.25}
+.cert .verify{font-size:.85rem;color:var(--aurora);margin-top:auto}
+
+/* ================= Contact / footer ================= */
+.contact{text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.6rem}
+.contact h2{margin:0 auto;max-width:18ch;font-size:clamp(2.5rem,6vw,4.6rem)}
+.site-foot{border-top:1px solid var(--line);padding:2rem 0;color:var(--mute);font-size:.92rem;position:relative;z-index:1}
+.site-foot .wrap{display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between;align-items:center}
+.site-foot nav{display:flex;gap:1.5rem}
+.site-foot a{text-decoration:none}.site-foot a:hover{color:var(--ink)}
+
+/* ================= Motion settings ================= */
+.settings{position:fixed;right:max(1rem,env(safe-area-inset-right,0px));bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:20}
+.settings-toggle{min-width:48px;min-height:48px;border-radius:999px;border:1px solid var(--line);background:rgba(12,16,25,.9);color:var(--ink);font:500 .9rem var(--sans);padding:0 1.1rem;cursor:pointer;backdrop-filter:blur(6px)}
+.settings-toggle:hover{border-color:var(--aurora)}
+.settings-body{position:absolute;right:0;bottom:calc(100% + .6rem);width:260px;border:1px solid var(--line);border-radius:16px;background:rgba(12,16,25,.96);padding:1.1rem 1.2rem;box-shadow:0 20px 50px -20px #000}
+.settings-body[hidden]{display:none}
+.settings label{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.6rem}
+.settings output{color:var(--aurora);font-variant-numeric:tabular-nums}
+.settings input[type=range]{width:100%;accent-color:var(--aurora);min-height:32px}
+.settings small{display:block;color:var(--mute);margin-top:.5rem;line-height:1.4}
+
+/* ================= Responsive ================= */
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:.5rem}
+  .orbit{width:min(78vw,380px);order:-1}
+  .about,.project{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .timeline summary{grid-template-columns:minmax(0,1fr) 44px}
+  .timeline time{grid-column:1 / -1}
+  .more{padding:0 .75rem 1.6rem}
+  .nav ul{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .echo,.shoot{display:none}
+}
+
+/* ================= Print = PDF resume ================= */
+#resume{display:none}
+.rs{background:#fff;color:#111;font:10.5pt/1.45 var(--sans)}
+.rs h1{font:500 22pt/1.1 var(--serif);margin:0;color:#111}
+.rs .role{margin:2pt 0 4pt;font-size:11pt;color:#333}
+.rs .contact-line{font-size:9.5pt;color:#333;margin-bottom:10pt}
+.rs h2{font:600 10.5pt var(--sans);max-width:none;border-bottom:1px solid #999;padding-bottom:2pt;margin:12pt 0 6pt;letter-spacing:0;color:#111}
+.rs h3{font:600 10.5pt var(--sans);letter-spacing:0;color:#111}
+.rs .job{margin-bottom:8pt;break-inside:avoid}
+.rs .meta{display:flex;justify-content:space-between;gap:8pt;font-size:9.5pt;color:#444}
+.rs ul{margin:3pt 0 0;padding-left:14pt}
+.rs li{margin:1.5pt 0}
+.rs p{margin:0}
+.rs a{color:#111;text-decoration:none}
+.pdf-host{position:fixed;left:-10000px;top:0;width:210mm;padding:14mm;background:#fff;z-index:-1}
+.pdf-host .rs{display:block}
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff}
+  body > *:not(#resume){display:none!important}
+  #resume{display:block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ===== Sky (decorative) ===== -->
+<div class="sky" aria-hidden="true">
+  <div class="nebula n1"></div><div class="nebula n2"></div>
+  <div class="layer" data-k="1"><div class="drift" style="--dur:260s"><div class="stars tw" style="--tw:6s"></div><div class="stars tw" style="--tw:6s;top:2000px"></div></div></div>
+  <div class="layer" data-k="2"><div class="drift" style="--dur:170s"><div class="stars tw" style="--tw:4.5s"></div><div class="stars tw" style="--tw:4.5s;top:2000px"></div></div></div>
+  <div class="layer" data-k="3"><div class="drift" style="--dur:110s"><div class="stars tw" style="--tw:7s"></div><div class="stars tw" style="--tw:7s;top:2000px"></div></div></div>
+  <span class="shoot s1"></span><span class="shoot s2"></span><span class="shoot s3"></span>
+</div>
+
+<header class="top">
+  <nav class="nav wrap" aria-label="Primary">
+    <a class="brand" href="#top">N Sai Pranoy Kumar<i>.</i></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#pipeline">How I build</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#project">Project</a></li>
+      <li><a href="#certs">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section id="top" class="wrap hero" aria-labelledby="hero-title">
+    <div>
+      <p class="name">N Sai Pranoy Kumar, Hyderabad</p>
+      <h1 id="hero-title"><span>Data Engineer</span><span class="amp">and</span><span>Salesforce Migration Specialist</span></h1>
+      <p class="sub">I build PySpark pipelines on Azure Databricks and move millions of records into Salesforce, reconciled to the last row.</p>
+      <div class="cta">
+        <span class="pill"><span class="dot" aria-hidden="true"></span>Open to Data Engineering and Salesforce Migration roles · Remote / Hybrid</span>
+      </div>
+      <div class="cta" style="margin-top:1rem">
+        <a class="btn solid" href="mailto:nsaipranoykumar@gmail.com">Email me</a>
+        <button class="btn" type="button" data-print>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
+          Download resume (PDF)
+        </button>
+      </div>
+      <a class="cue" href="#impact">Scroll</a>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <div class="ring r1"><span class="moon"><span>PySpark</span></span><span class="moon b"><span>SQL</span></span></div>
+      <div class="ring r2"><span class="moon"><span>Delta</span></span></div>
+      <div class="ring r3"><span class="moon"></span></div>
+      <span class="echo"></span><span class="echo"></span><span class="echo"></span>
+      <div class="bob"><div class="planet"></div></div>
+    </div>
+  </section>
+
+  <!-- ===== IMPACT ===== -->
+  <section id="impact" class="wrap stats" aria-label="Impact in numbers">
+    <div class="stat"><b data-count="5" data-suffix="+">5+</b><span>years in data engineering</span></div>
+    <div class="stat"><b data-count="2" data-suffix="M+">2M+</b><span>records migrated to Salesforce</span></div>
+    <div class="stat"><b data-count="95" data-suffix="%">95%</b><span>faster migration queries</span></div>
+    <div class="stat"><b data-count="40" data-suffix="%">40%</b><span>faster Spark processing</span></div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="wrap" aria-labelledby="about-title">
+    <p class="label">About</p>
+    <div class="about">
+      <h2 id="about-title">Raw data in. Trusted data out.</h2>
+      <div>
+        <p>I’m a data engineer with 5+ years across multi-source integration and Salesforce data migration. I design Medallion pipelines on Azure Databricks with Delta Lake, tune Spark until it’s fast, and add the data-quality checks that keep it right.</p>
+        <p>On the CRM side I plan and run large Salesforce migrations end to end: source-to-target mapping, cleansing, deduplication, loads and full reconciliation, through SIT, UAT and production.</p>
+        <blockquote>A migration isn’t done until every record is accounted for.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PIPELINE GRAPHIC ===== -->
+  <section id="pipeline" class="wrap" aria-labelledby="pipe-title">
+    <p class="label">How I build</p>
+    <h2 id="pipe-title">Sources to gold, then into Salesforce.</h2>
+    <p class="lede">The Medallion pattern I use: land raw data, clean and conform it, then publish analytics-ready and migration-ready tables. Hover a stage.</p>
+    <div class="panel pipe">
+      <div class="pipe-scroll">
+      <svg viewBox="0 0 1000 360" role="img" aria-labelledby="pipe-desc">
+        <desc id="pipe-desc">Data flows from Kafka streams, Blob Storage JSON and legacy CRM exports into a Bronze layer, then Silver, then Gold on Delta Lake, and finally to analytics and Salesforce.</desc>
+        <defs>
+          <radialGradient id="gB"><stop offset="0" stop-color="#d9a76a"/><stop offset="1" stop-color="#d9a76a" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gS"><stop offset="0" stop-color="#cfd6e0"/><stop offset="1" stop-color="#cfd6e0" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gG"><stop offset="0" stop-color="#f0cf7a"/><stop offset="1" stop-color="#f0cf7a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <!-- tracks -->
+        <path id="t1" class="track" d="M170 70 C 230 70, 230 180, 300 180"/>
+        <path id="t2" class="track" d="M170 180 L 300 180"/>
+        <path id="t3" class="track" d="M170 290 C 230 290, 230 180, 300 180"/>
+        <path id="t4" class="track" d="M420 180 L 480 180"/>
+        <path id="t5" class="track" d="M600 180 L 660 180"/>
+        <path id="t6" class="track" d="M780 180 C 830 180, 830 100, 860 100"/>
+        <path id="t7" class="track" d="M780 180 C 830 180, 830 260, 860 260"/>
+        <!-- particles -->
+        <g fill="#9fdcb8">
+          <circle r="3.5"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#t1"/></animateMotion></circle>
+          <circle r="3.5"><animateMotion dur="2.2s" begin=".6s" repeatCount="indefinite"><mpath href="#t2"/></animateMotion></circle>
+          <circle r="3.5"><animateMotion dur="2.8s" begin="1.1s" repeatCount="indefinite"><mpath href="#t3"/></animateMotion></circle>
+          <circle r="3.5"><animateMotion dur="1.4s" repeatCount="indefinite"><mpath href="#t4"/></animateMotion></circle>
+          <circle r="3.5"><animateMotion dur="1.4s" begin=".7s" repeatCount="indefinite"><mpath href="#t5"/></animateMotion></circle>
+          <circle r="3.5" fill="#7fb8e0"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#t6"/></animateMotion></circle>
+          <circle r="3.5" fill="#d9a76a"><animateMotion dur="1.8s" begin=".9s" repeatCount="indefinite"><mpath href="#t7"/></animateMotion></circle>
+        </g>
+        <!-- sources -->
+        <g class="node"><rect x="20" y="40" width="150" height="60" rx="12"/><text x="40" y="66">Kafka streams</text><text class="sm" x="40" y="86">real-time events</text></g>
+        <g class="node"><rect x="20" y="150" width="150" height="60" rx="12"/><text x="40" y="176">Blob Storage</text><text class="sm" x="40" y="196">JSON files</text></g>
+        <g class="node"><rect x="20" y="260" width="150" height="60" rx="12"/><text x="40" y="286">Legacy CRM</text><text class="sm" x="40" y="306">exports, CSV</text></g>
+        <!-- medallion -->
+        <circle cx="360" cy="180" r="70" fill="url(#gB)" opacity=".18"/>
+        <g class="node"><rect x="300" y="125" width="120" height="110" rx="16"/><text class="tier" x="322" y="168" fill="#d9a76a" style="fill:#d9a76a">Bronze</text><text class="sm" x="322" y="192">raw, as landed</text><text class="sm" x="322" y="210">schema on read</text></g>
+        <circle cx="540" cy="180" r="70" fill="url(#gS)" opacity=".14"/>
+        <g class="node"><rect x="480" y="125" width="120" height="110" rx="16"/><text class="tier" x="502" y="168" style="fill:#cfd6e0">Silver</text><text class="sm" x="502" y="192">cleaned, deduped</text><text class="sm" x="502" y="210">quality checked</text></g>
+        <circle cx="720" cy="180" r="70" fill="url(#gG)" opacity=".18"/>
+        <g class="node"><rect x="660" y="125" width="120" height="110" rx="16"/><text class="tier" x="682" y="168" style="fill:#f0cf7a">Gold</text><text class="sm" x="682" y="192">MERGE upserts</text><text class="sm" x="682" y="210">business-ready</text></g>
+        <!-- targets -->
+        <g class="node"><rect x="860" y="70" width="125" height="60" rx="12"/><text x="878" y="96">Analytics</text><text class="sm" x="878" y="116">reports, BI</text></g>
+        <g class="node"><rect x="860" y="230" width="125" height="60" rx="12"/><text x="878" y="256">Salesforce</text><text class="sm" x="878" y="276">reconciled loads</text></g>
+        <text class="sm" x="300" y="290">Delta Lake · Unity Catalog · Databricks Jobs</text>
+      </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STACK ===== -->
+  <section id="stack" class="wrap" aria-labelledby="stack-title">
+    <p class="label">Stack</p>
+    <h2 id="stack-title">Tools in orbit.</h2>
+    <div class="stack">
+      <div class="panel"><h3>Languages</h3><ul class="chips"><li>Python</li><li>PySpark</li><li>SQL</li><li>Spark SQL</li><li>SOQL</li></ul></div>
+      <div class="panel"><h3>Platform</h3><ul class="chips"><li>Azure Databricks</li><li>Apache Spark</li><li>Delta Lake</li><li>Unity Catalog</li><li>Apache Kafka</li><li>Azure Blob Storage</li></ul></div>
+      <div class="panel"><h3>Engineering</h3><ul class="chips"><li>ETL / ELT</li><li>Medallion Architecture</li><li>Data Modeling</li><li>Incremental loads (MERGE)</li><li>Data Quality</li><li>Performance Tuning</li></ul></div>
+      <div class="panel"><h3>Salesforce migration</h3><ul class="chips"><li>Source-to-target mapping</li><li>Data Loader</li><li>Workbench</li><li>External IDs</li><li>Deduplication</li><li>Reconciliation</li><li>Flows</li><li>Permission Sets</li></ul></div>
+      <div class="panel"><h3>Tools</h3><ul class="chips"><li>Databricks Jobs</li><li>Azure DevOps</li><li>Git</li><li>Jira</li><li>Pandas</li><li>Power Query</li><li>MS Access</li></ul></div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience" class="wrap" aria-labelledby="exp-title">
+    <p class="label">Experience</p>
+    <h2 id="exp-title">Five years, three missions.</h2>
+    <p class="lede">Tap a role for the details.</p>
+    <ol class="timeline">
+      <li>
+        <details>
+          <summary>
+            <time>May 2025 – Aug 2026</time>
+            <div><h3>Consultant (Data Engineer)</h3><p class="org">Capgemini · Fast-food chain management</p><p class="brief">Led a 2M+ record Salesforce data migration with full reconciliation.</p></div>
+            <span class="plus" aria-hidden="true"></span>
+          </summary>
+          <div class="more">
+            <ul>
+              <li>Migrated 2M+ records across Account, Contact, Lead, Opportunity and Contract objects.</li>
+              <li>Built a Medallion-style SQL staging pipeline in MS Access that cut query time by 95%.</li>
+              <li>Ran Data Loader insert and upsert loads keyed on External IDs.</li>
+              <li>Owned source-to-target mapping, cleansing, deduplication and post-load reconciliation.</li>
+              <li>Delivered through SIT, UAT and production releases, tracked in Jira.</li>
+            </ul>
+            <ul class="tags"><li>Salesforce</li><li>Data Loader</li><li>SQL</li><li>MS Access</li><li>Jira</li></ul>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>
+            <time>Jan 2022 – Jan 2025</time>
+            <div><h3>Application Development Analyst (Data Engineer)</h3><p class="org">Accenture · Supply chain management</p><p class="brief">Built and tuned PySpark pipelines on Azure Databricks.</p></div>
+            <span class="plus" aria-hidden="true"></span>
+          </summary>
+          <div class="more">
+            <ul>
+              <li>Built PySpark and Spark SQL pipelines on Azure Databricks using Medallion Architecture and Delta Lake.</li>
+              <li>Ingested Kafka streams and JSON from Azure Blob Storage.</li>
+              <li>Orchestrated with Databricks Jobs, including retries and alerting.</li>
+              <li>Improved performance 30% and processing speed 40% with broadcast joins, partitioning, Z-ORDER and AQE.</li>
+              <li>Implemented Delta MERGE incremental loads.</li>
+              <li>Added REST API data-quality alerting that cut data errors by 95%.</li>
+            </ul>
+            <ul class="tags"><li>PySpark</li><li>Azure Databricks</li><li>Delta Lake</li><li>Kafka</li><li>Spark SQL</li></ul>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>
+            <time>May 2021 – Dec 2021</time>
+            <div><h3>Associate Software Engineer</h3><p class="org">Accenture · Trade Promotion Management (CG Cloud)</p><p class="brief">Production support for Salesforce Trade Promotion Management.</p></div>
+            <span class="plus" aria-hidden="true"></span>
+          </summary>
+          <div class="more">
+            <ul>
+              <li>Supported Salesforce Consumer Goods Cloud Trade Promotion Management in production.</li>
+              <li>Ran data fixes and imports with Data Loader and Workbench, validated with SOQL.</li>
+              <li>Performed root-cause analysis on production incidents.</li>
+              <li>Managed user access, profiles and permission sets.</li>
+              <li>Supported Flows, Validation Rules and Reports.</li>
+            </ul>
+            <ul class="tags"><li>Salesforce TPM</li><li>SOQL</li><li>Workbench</li><li>Data Loader</li></ul>
+          </div>
+        </details>
+      </li>
+      <li>
+        <details>
+          <summary>
+            <time>2019</time>
+            <div><h3>B.Tech, Civil Engineering</h3><p class="org">Chalapathi Institute of Engineering and Technology</p><p class="brief">Where structured, systems thinking started.</p></div>
+            <span class="plus" aria-hidden="true"></span>
+          </summary>
+          <div class="more"><ul><li>Bachelor of Technology in Civil Engineering, graduated 2019.</li></ul></div>
+        </details>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== PROJECT ===== -->
+  <section id="project" class="wrap" aria-labelledby="proj-title">
+    <p class="label">Project</p>
+    <h2 id="proj-title">Something I built for fun, and for use.</h2>
+    <article class="panel project">
+      <div>
+        <h3>SheetScrub</h3>
+        <p>A browser-based ETL and data-cleaning tool: load a messy sheet, clean, dedupe and validate it, and export the result. Nothing leaves the browser.</p>
+        <div class="cta">
+          <a class="btn solid" href="https://sheetscrub.vercel.app/" target="_blank" rel="noopener">Open SheetScrub</a>
+          <a class="btn" href="https://github.com/PranoyProjects/sheetscrub" target="_blank" rel="noopener">View code</a>
+        </div>
+      </div>
+      <div class="sheet" aria-hidden="true">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <table>
+          <tr><th>name</th><th>email</th><th>status</th></tr>
+          <tr class="scan"><td>  ravi k </td><td class="bad">RAVI@MAIL..COM</td><td class="ok">fixed</td></tr>
+          <tr><td>Ravi K</td><td>ravi@mail.com</td><td class="ok">clean</td></tr>
+          <tr class="scan" style="animation-delay:1.3s"><td class="bad">Ravi K</td><td class="bad">ravi@mail.com</td><td class="ok">deduped</td></tr>
+          <tr><td>Asha M</td><td>asha@mail.com</td><td class="ok">clean</td></tr>
+          <tr class="scan" style="animation-delay:2.6s"><td>asha m</td><td class="bad">null</td><td class="ok">flagged</td></tr>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===== CERTIFICATIONS ===== -->
+  <section id="certs" class="wrap" aria-labelledby="cert-title">
+    <p class="label">Certifications</p>
+    <h2 id="cert-title">Verified, not just claimed.</h2>
+    <div class="certs">
+      <div class="cert">
+        <svg class="badge" viewBox="0 0 46 46" aria-hidden="true"><path d="M23 4 41 14v18L23 42 5 32V14z" fill="none" stroke="#d9a76a" stroke-width="1.5"/><path d="M14 20l9 5 9-5M14 26l9 5 9-5" fill="none" stroke="#d9a76a" stroke-width="1.5"/></svg>
+        <span class="issuer">Databricks</span>
+        <h3>Certified Data Engineer Associate</h3>
+      </div>
+      <a class="cert" href="https://trailheadacademy.salesforce.com/certificate/exam-platform-admin---Plat-Admn-201" target="_blank" rel="noopener">
+        <svg class="badge" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="18" fill="none" stroke="#7fb8e0" stroke-width="1.5"/><path d="M15 27a6 6 0 0 1 3-11 8 8 0 0 1 14 2 5 5 0 0 1-1 9z" fill="none" stroke="#7fb8e0" stroke-width="1.5"/></svg>
+        <span class="issuer">Salesforce</span>
+        <h3>Certified Platform Administrator</h3>
+        <span class="verify">Verify credential</span>
+      </a>
+      <a class="cert" href="https://trailheadacademy.salesforce.com/certificate/exam-sales-consultant---Sales-Con-201" target="_blank" rel="noopener">
+        <svg class="badge" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="18" fill="none" stroke="#7fb8e0" stroke-width="1.5"/><path d="M14 30l6-7 5 4 7-10" fill="none" stroke="#7fb8e0" stroke-width="1.5"/></svg>
+        <span class="issuer">Salesforce</span>
+        <h3>Certified Agentforce Sales Consultant</h3>
+        <span class="verify">Verify credential</span>
+      </a>
+      <a class="cert" href="https://trailheadacademy.salesforce.com/certificate/exam-service-consultant---Service-Con-201" target="_blank" rel="noopener">
+        <svg class="badge" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="18" fill="none" stroke="#7fb8e0" stroke-width="1.5"/><path d="M15 25a8 8 0 0 1 16 0v4h-3v-5M15 25v4h3v-5" fill="none" stroke="#7fb8e0" stroke-width="1.5"/></svg>
+        <span class="issuer">Salesforce</span>
+        <h3>Certified Agentforce Service Consultant</h3>
+        <span class="verify">Verify credential</span>
+      </a>
+      <div class="cert">
+        <svg class="badge" viewBox="0 0 46 46" aria-hidden="true"><path d="M8 36 20 8h6l12 28H8z" fill="none" stroke="#9fdcb8" stroke-width="1.5"/><path d="M17 28h12" stroke="#9fdcb8" stroke-width="1.5"/></svg>
+        <span class="issuer">Microsoft</span>
+        <h3>Azure Fundamentals (AZ-900)</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="wrap contact" aria-labelledby="contact-title">
+    <p class="label">Contact</p>
+    <h2 id="contact-title">Have data that needs to move? Let’s talk.</h2>
+    <div class="cta" style="justify-content:center">
+      <a class="btn solid" href="mailto:nsaipranoykumar@gmail.com">nsaipranoykumar@gmail.com</a>
+      <button class="btn" type="button" data-print>Download resume (PDF)</button>
+    </div>
+    <p style="color:var(--mute);margin:0">Hyderabad, India. Open to remote and hybrid roles.</p>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>© 2026 N Sai Pranoy Kumar</span>
+    <nav aria-label="Profiles">
+      <a href="https://www.linkedin.com/in/sai-pranoy-kumar-36267a18b/" target="_blank" rel="me noopener">LinkedIn</a>
+      <a href="https://github.com/PranoyProjects" target="_blank" rel="me noopener">GitHub</a>
+      <a href="#top">Back to top</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ===== Motion settings ===== -->
+<div class="settings">
+  <div class="settings-body" id="settings-body" hidden>
+    <label for="depth">Parallax depth <output id="depth-out" for="depth">30</output></label>
+    <input id="depth" type="range" min="0" max="80" step="1" value="30">
+    <small>0 turns parallax off. Ambient motion follows your system’s reduced-motion setting.</small>
+  </div>
+  <button class="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-body">Motion</button>
+</div>
+
+<!-- ===== Print-only resume (what "Download resume" saves as PDF) ===== -->
+<article id="resume" class="rs">
+  <h1>N Sai Pranoy Kumar</h1>
+  <p class="role">Data Engineer | Salesforce Migration Specialist</p>
+  <p class="contact-line">Hyderabad, India · nsaipranoykumar@gmail.com · linkedin.com/in/sai-pranoy-kumar-36267a18b · github.com/PranoyProjects</p>
+  <h2>Summary</h2>
+  <p>Data Engineer with 5+ years in multi-source data integration and Salesforce data migration. Builds PySpark pipelines on Azure Databricks using Medallion Architecture and Delta Lake; delivered 2M+ record Salesforce migrations with full reconciliation.</p>
+  <h2>Skills</h2>
+  <p><b>Languages:</b> Python, PySpark, SQL, Spark SQL, SOQL. <b>Platform:</b> Azure Databricks, Apache Spark, Delta Lake, Unity Catalog, Apache Kafka, Azure Blob Storage. <b>Engineering:</b> ETL/ELT, Medallion Architecture, Data Modeling, Incremental loads (MERGE), Data Quality, Performance Tuning. <b>Salesforce:</b> Source-to-target mapping, Data Loader, Workbench, External IDs, Deduplication, Reconciliation, Flows, Permission Sets. <b>Tools:</b> Databricks Jobs, Azure DevOps, Git, Jira, Pandas, Power Query, MS Access.</p>
+  <h2>Experience</h2>
+  <div class="job"><div class="meta"><h3>Consultant (Data Engineer), Capgemini · Fast-food chain management</h3><span>May 2025 – Aug 2026</span></div>
+    <ul><li>Led a 2M+ record Salesforce migration across Account, Contact, Lead, Opportunity and Contract objects with full reconciliation.</li><li>Built a Medallion-style SQL staging pipeline in MS Access that cut query time by 95%.</li><li>Ran Data Loader insert/upsert loads using External IDs; owned mapping, cleansing and deduplication.</li><li>Delivered through SIT, UAT and production releases; tracked in Jira.</li></ul></div>
+  <div class="job"><div class="meta"><h3>Application Development Analyst (Data Engineer), Accenture · Supply chain management</h3><span>Jan 2022 – Jan 2025</span></div>
+    <ul><li>Built PySpark/Spark SQL pipelines on Azure Databricks with Medallion Architecture and Delta Lake.</li><li>Ingested Kafka streams and Blob Storage JSON; orchestrated with Databricks Jobs, retries and alerts.</li><li>Improved performance 30% and processing speed 40% via broadcast joins, partitioning, Z-ORDER and AQE.</li><li>Implemented Delta MERGE incremental loads; REST API data-quality alerting cut errors 95%.</li></ul></div>
+  <div class="job"><div class="meta"><h3>Associate Software Engineer, Accenture · Trade Promotion Management (CG Cloud)</h3><span>May 2021 – Dec 2021</span></div>
+    <ul><li>Production support for Salesforce Consumer Goods Cloud Trade Promotion Management.</li><li>Data fixes and imports with Data Loader and Workbench; SOQL validation; root-cause analysis.</li><li>Managed user access, profiles and permission sets; supported Flows, Validation Rules and Reports.</li></ul></div>
+  <h2>Project</h2>
+  <p><b>SheetScrub</b>: browser-based ETL and data-cleaning tool. sheetscrub.vercel.app · github.com/PranoyProjects/sheetscrub</p>
+  <h2>Certifications</h2>
+  <p>Databricks Certified Data Engineer Associate · Salesforce Certified Platform Administrator · Salesforce Certified Agentforce Sales Consultant · Salesforce Certified Agentforce Service Consultant · Microsoft Certified: Azure Fundamentals (AZ-900)</p>
+  <h2>Education</h2>
+  <p>B.Tech, Civil Engineering, Chalapathi Institute of Engineering and Technology, 2019</p>
+</article>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Starfield: one box-shadow string per layer ----
+  const field = (n, color, seed) => {
+    let s = seed; const out = [];
+    const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    for (let i = 0; i < n; i++) out.push(`${Math.round(rnd()*2400)}px ${Math.round(rnd()*2000)}px ${color}`);
+    return out.join(',');
+  };
+  const specs = [[300,'#ebe7de',11],[120,'#cfeedd',29],[45,'#f0d3ad',53]];
+  document.querySelectorAll('.layer').forEach((layer, i) => {
+    const shadow = field(...specs[i]);
+    layer.querySelectorAll('.stars').forEach(el => el.style.boxShadow = shadow);
+  });
+
+  // ---- Pause SVG pipeline particles for reduced motion ----
+  if (reduce) document.querySelectorAll('svg').forEach(s => s.pauseAnimations && s.pauseAnimations());
+
+  // ---- Depth setting ----
+  const input = document.getElementById('depth'), out = document.getElementById('depth-out');
+  let saved = null;
+  try { saved = localStorage.getItem('sp-depth'); } catch (e) {}
+  const setDepth = v => {
+    input.value = v; out.textContent = v;
+    root.style.setProperty('--depth', v + 'px');
+    try { localStorage.setItem('sp-depth', v); } catch (e) {}
+  };
+  setDepth(saved !== null ? saved : (reduce ? 0 : 30));
+  input.addEventListener('input', e => setDepth(e.target.value));
+
+  // ---- Pointer parallax (one update per frame) ----
+  let raf = 0, nx = 0, ny = 0;
+  addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch') return;
+    nx = (e.clientX / innerWidth) * 2 - 1;
+    ny = (e.clientY / innerHeight) * 2 - 1;
+    if (!raf) raf = requestAnimationFrame(() => {
+      raf = 0;
+      root.style.setProperty('--px', nx.toFixed(3));
+      root.style.setProperty('--py', ny.toFixed(3));
+    });
+  }, { passive: true });
+
+  // ---- Settings panel ----
+  const btn = document.querySelector('.settings-toggle'), body = document.getElementById('settings-body');
+  btn.addEventListener('click', () => {
+    const open = body.hidden;
+    body.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+    if (open) input.focus();
+  });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !body.hidden) { body.hidden = true; btn.setAttribute('aria-expanded','false'); btn.focus(); }
+  });
+
+  // ---- Count-up stats when visible ----
+  const nums = document.querySelectorAll('[data-count]');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target, end = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now();
+      const step = t => {
+        const p = Math.min(1, (t - t0) / 1400), v = Math.round(end * (1 - Math.pow(1 - p, 3)));
+        el.textContent = v + suf;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step); io.unobserve(el);
+    }), { threshold: .6 });
+    nums.forEach(n => { n.textContent = '0' + (n.dataset.suffix || ''); io.observe(n); });
+  }
+
+  // ---- Resume PDF ----
+  // In the hosted artifact: render the resume to a PDF and offer it via the downloads capability.
+  // As a plain file elsewhere: fall back to the browser's print dialog ("Save as PDF").
+  const FILE = 'N_Sai_Pranoy_Kumar_Resume';
+  let dlPromise = null;
+  const getDownloads = () => dlPromise || (dlPromise = (window.claude && claude.use) ? claude.use('downloads').catch(() => null) : Promise.resolve(null));
+  const loadLib = () => window.html2pdf ? Promise.resolve() : new Promise((res, rej) => {
+    const sc = document.createElement('script');
+    sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    sc.onload = res; sc.onerror = rej; document.head.appendChild(sc);
+  });
+  const printFallback = () => {
+    const t = document.title; document.title = FILE; window.print();
+    setTimeout(() => document.title = t, 500);
+  };
+  const savePdf = async (btn) => {
+    const dl = await getDownloads();
+    if (!dl) return printFallback();
+    const label = btn.lastChild.textContent;
+    btn.disabled = true; btn.lastChild.textContent = ' Preparing PDF…';
+    // Render from an HTML string: html2pdf places it in its own on-screen container,
+    // avoiding the blank output caused by off-screen or scrolled source elements.
+    const doc = document.getElementById('resume').cloneNode(true);
+    doc.removeAttribute('id'); doc.style.display = 'block';
+    const html = '<div class="rs" style="width:182mm;background:#fff;color:#111">' + doc.outerHTML + '</div>';
+    const y = window.scrollY;
+    try {
+      await loadLib();
+      window.scrollTo(0, 0);
+      const blob = await html2pdf().set({
+        margin: [14, 14, 14, 14], filename: FILE + '.pdf',
+        html2canvas: { scale: 2, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css'], avoid: ['.job', 'h2'] }
+      }).from(html, 'string').outputPdf('blob');
+      window.scrollTo(0, y);
+      await dl.save({ filename: FILE + '.pdf', data: blob });
+    } catch (e) {
+      window.scrollTo(0, y);
+      if (!e || e.code !== 'declined') console.warn('PDF save failed', e);
+    } finally {
+      btn.disabled = false; btn.lastChild.textContent = label;
+    }
+  };
+  document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => savePdf(b)));
+})();
+</script>
+</body>
+</html>
