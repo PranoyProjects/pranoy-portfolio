@@ -121,6 +121,13 @@ h2{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.05;max-width:20ch}
 .echo:nth-of-type(2){animation-delay:2.3s}.echo:nth-of-type(3){animation-delay:4.6s}
 @keyframes echo{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.9);opacity:0}}
 
+
+/* ================= Galaxy (WebGL, cursor/touch reactive) ================= */
+#galaxy{position:absolute;top:0;bottom:0;left:calc(50% - 50vw);width:100vw;height:100%;display:block;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.6s ease}
+#galaxy.on{opacity:1}
+.hero > div:first-of-type{position:relative;z-index:1}
+.orbit{z-index:1}
+
 /* ================= Impact stats ================= */
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;padding-top:0}
 .stat{border-top:1px solid var(--line);padding-top:1.2rem}
@@ -292,6 +299,7 @@ details[open] .plus{transform:rotate(45deg);border-color:var(--aurora)}
 
   <!-- ===== HERO ===== -->
   <section id="top" class="wrap hero" aria-labelledby="hero-title">
+    <canvas id="galaxy" aria-hidden="true"></canvas>
     <div>
       <p class="name">N Sai Pranoy Kumar, Hyderabad</p>
       <h1 id="hero-title"><span>Data Engineer</span><span class="amp">and</span><span>Salesforce Migration Specialist</span></h1>
@@ -718,6 +726,162 @@ details[open] .plus{transform:rotate(45deg);border-color:var(--aurora)}
     }
   };
   document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => savePdf(b)));
+})();
+</script>
+
+<!-- ===== Galaxy hero: three.js point cloud that reacts to cursor and touch ===== -->
+<script>
+(() => {
+  const canvas = document.getElementById('galaxy');
+  const hero = document.getElementById('top');
+  const orbit = document.querySelector('.orbit');
+  if (!canvas || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const gl = document.createElement('canvas').getContext('webgl'); // probe WebGL; keep CSS stars if missing
+  if (!gl) return;
+
+  const load = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+  load('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js').then(init).catch(() => {});
+
+  function init() {
+    // ---- Config (tweak here) ----
+    const lowPower = (navigator.hardwareConcurrency || 4) <= 4 || innerWidth < 700;
+    const CFG = {
+      count: lowPower ? 2200 : 4200,  // number of stars
+      arms: 3,                        // spiral arms
+      spin: 1.15,                     // how tightly arms curl
+      radius: 5,                      // galaxy radius (world units)
+      scatter: 0.55,                  // arm looseness
+      inner: new THREE.Color('#f0c98a'),  // core colour (amber)
+      outer: new THREE.Color('#9fdcb8'),  // edge colour (aurora green)
+      accent: new THREE.Color('#7fb8e0')  // occasional blue stars
+    };
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: 'low-power' });
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    camera.position.set(0, 0, 14);
+
+    // ---- Build the spiral galaxy geometry ----
+    const n = CFG.count, pos = new Float32Array(n * 3), col = new Float32Array(n * 3), size = new Float32Array(n), phase = new Float32Array(n);
+    const c = new THREE.Color();
+    for (let i = 0; i < n; i++) {
+      const r = Math.pow(Math.random(), 1.6) * CFG.radius;              // denser core
+      const arm = (i % CFG.arms) / CFG.arms * Math.PI * 2;
+      const ang = arm + r * CFG.spin;
+      const rnd = () => Math.pow(Math.random(), 3) * (Math.random() < .5 ? 1 : -1) * CFG.scatter * (r + .4);
+      pos[i*3]   = Math.cos(ang) * r + rnd();
+      pos[i*3+1] = rnd() * .35;                                         // thin disk
+      pos[i*3+2] = Math.sin(ang) * r + rnd();
+      c.copy(CFG.inner).lerp(CFG.outer, r / CFG.radius);
+      if (Math.random() < .08) c.copy(CFG.accent);
+      col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+      size[i] = Math.random() < .03 ? 3.2 : .6 + Math.random() * 1.4;  // a few bright stars
+      phase[i] = Math.random() * 6.283;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+    geo.setAttribute('aPhase', new THREE.BufferAttribute(phase, 1));
+
+    // ---- Shader: stars near the pointer scatter + swirl, then ease back ----
+    const mat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: true,
+      uniforms: { uMouse: { value: new THREE.Vector2(9, 9) }, uForce: { value: 0 }, uTime: { value: 0 }, uPR: { value: renderer.getPixelRatio() }, uAspect: { value: 1 } },
+      vertexShader: `
+        attribute float aSize; attribute float aPhase;
+        uniform vec2 uMouse; uniform float uForce, uTime, uPR, uAspect;
+        varying vec3 vColor; varying float vAlpha;
+        void main(){
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          vec4 clip = projectionMatrix * mv;
+          vec2 d = clip.xy / clip.w - uMouse; d.x *= uAspect;
+          float dist = length(d);
+          float f = uForce * smoothstep(0.42, 0.0, dist);
+          vec2 dir = dist > 1e-4 ? d / dist : vec2(0.0);
+          vec2 off = (dir * 0.16 + vec2(-dir.y, dir.x) * 0.09) * f;   // push out + swirl
+          off.x /= uAspect;
+          clip.xy += off * clip.w;
+          gl_Position = clip;
+          gl_PointSize = aSize * uPR * (30.0 / -mv.z) * (1.0 + f * 0.9);
+          vColor = color * (1.0 + f * 1.4);
+          vAlpha = (0.55 + 0.45 * f) * (0.72 + 0.28 * sin(uTime * 1.8 + aPhase));
+        }`,
+      fragmentShader: `
+        varying vec3 vColor; varying float vAlpha;
+        void main(){
+          float r = length(gl_PointCoord - 0.5);
+          float a = smoothstep(0.5, 0.0, r); a *= a;
+          gl_FragColor = vec4(vColor, a * vAlpha);
+        }`
+    });
+
+    const stars = new THREE.Points(geo, mat);
+    const disk = new THREE.Group(); disk.add(stars);      // stars spin inside the tilted disk
+    disk.rotation.set(1.05, 0, -0.38);
+    scene.add(disk);
+
+    // ---- Sizing: galaxy centred on the CSS planet, scaled to the orbit ----
+    let W = 1, H = 1, unitsPerPx = 1;
+    const resize = () => {
+      const r = canvas.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      renderer.setSize(W, H, false);
+      camera.aspect = W / H; camera.updateProjectionMatrix();
+      mat.uniforms.uAspect.value = W / H;
+      unitsPerPx = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z / H;
+    };
+    resize(); addEventListener('resize', resize);
+    const place = () => {
+      const cr = canvas.getBoundingClientRect(), or = orbit.getBoundingClientRect();
+      disk.position.set((or.left + or.width / 2 - cr.left - W / 2) * unitsPerPx, -(or.top + or.height / 2 - cr.top - H / 2) * unitsPerPx, 0);
+      const s = (or.width * 1.05 * unitsPerPx) / CFG.radius;
+      disk.scale.setScalar(s);
+    };
+
+    // ---- Pointer + touch input ----
+    const target = new THREE.Vector2(9, 9), mouse = mat.uniforms.uMouse.value;
+    let active = false, lastMove = 0, dragX = null, spinV = 0;
+    const toNdc = (x, y) => { const r = canvas.getBoundingClientRect(); target.set((x - r.left) / r.width * 2 - 1, -((y - r.top) / r.height * 2 - 1)); };
+    addEventListener('pointermove', e => {
+      const hr = hero.getBoundingClientRect();
+      active = e.clientY >= hr.top && e.clientY <= hr.bottom;
+      if (!active) return;
+      toNdc(e.clientX, e.clientY); lastMove = performance.now();
+      if (dragX !== null) { spinV += (e.clientX - dragX) * 0.00012; dragX = e.clientX; }   // drag spins the galaxy
+    }, { passive: true });
+    hero.addEventListener('pointerdown', e => { dragX = e.clientX; toNdc(e.clientX, e.clientY); active = true; lastMove = performance.now(); });
+    addEventListener('pointerup', () => { dragX = null; });
+    addEventListener('pointercancel', () => { dragX = null; });
+    hero.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') active = false; });
+
+    // ---- Render loop (paused when hero is off-screen) ----
+    let visible = true, raf = 0, t0 = performance.now();
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }, { threshold: 0 }).observe(hero);
+    const css = getComputedStyle(document.documentElement);
+    function tick(now) {
+      raf = 0;
+      if (!visible) return;
+      const t = (now - t0) / 1000;
+      mat.uniforms.uTime.value = t;
+      mouse.lerp(target, 0.12);                                            // smooth follow
+      const want = active && (now - lastMove < 2500) ? 1 : 0;              // fade force when idle
+      mat.uniforms.uForce.value += (want - mat.uniforms.uForce.value) * 0.06;
+      spinV *= 0.95;
+      stars.rotation.y += 0.0009 + spinV;                                  // slow rotation + drag momentum
+      const depth = parseFloat(css.getPropertyValue('--depth')) || 0;      // ties tilt to the Motion slider
+      const px = parseFloat(root.style.getPropertyValue('--px')) || 0, py = parseFloat(root.style.getPropertyValue('--py')) || 0;
+      disk.rotation.x += ((1.05 + py * depth * 0.004) - disk.rotation.x) * 0.05;
+      disk.rotation.z += ((-0.38 - px * depth * 0.004) - disk.rotation.z) * 0.05;
+      place();
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(tick);
+    }
+    const root = document.documentElement;
+    raf = requestAnimationFrame(tick);
+    requestAnimationFrame(() => canvas.classList.add('on'));
+  }
 })();
 </script>
 </body>
